@@ -1,0 +1,22 @@
+SCOPE OF LOCK:-
+----------------
+One significant difference between the synchronized method and block is that 
+Synchronized block generally reduces the scope of the lock. 
+As the scope of a lock is inversely proportional to performance, 
+it's always better to lock only a critical section of code. 
+
+CONTROL OVER THE LOCK:-
+-----------------------
+Synchronized blocks provide granular control over a lock, as you can use arbitrary
+any lock to provide mutual exclusion to critical section code. On the other hand,
+the synchronized method always locks either on the current object represented by
+this keyword or class level lock, if it's a static synchronized method.
+
+
+3. NullPointerExcpetion:-
+-------------------------
+Synchronized block can throw java.lang.NullPointerException if 
+expression provided to block as parameter evaluates to null,
+ which is not the case with synchronized methods.
+
+

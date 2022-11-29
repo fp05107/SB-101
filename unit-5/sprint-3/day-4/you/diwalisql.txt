@@ -1,0 +1,357 @@
+mysql> create database diwali;
+Query OK, 1 row affected (0.02 sec)
+
+mysql> use diwali;
+Database changed
+mysql> create table programmer(
+    -> empno varchar(5) primary key,
+    -> projid varchar(3),
+    -> lastname varchar(30),
+    -> firstname varchar(30),
+    -> hiredate date,
+    -> language varchar(15),
+    -> taskno int,
+    -> privilege varchar(25)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> desc programmer;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| empno     | varchar(5)  | NO   | PRI | NULL    |       |
+| projid    | varchar(3)  | YES  |     | NULL    |       |
+| lastname  | varchar(30) | YES  |     | NULL    |       |
+| firstname | varchar(30) | YES  |     | NULL    |       |
+| hiredate  | date        | YES  |     | NULL    |       |
+| language  | varchar(15) | YES  |     | NULL    |       |
+| taskno    | int         | YES  |     | NULL    |       |
+| privilege | varchar(25) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+8 rows in set (0.00 sec)
+
+mysql> insert into programmer(empno,lastname,firstname,hiredate,projid,language,taskno,privilege) values('201','gupta','saurav','1/1/95','NPR','VB',52,'secret');
+ERROR 1292 (22007): Incorrect date value: '1/1/95' for column 'hiredate' at row 1
+mysql> insert into programmer(empno,lastname,firstname,hiredate,projid,language,taskno,privilege) values('201','gupta','saurav',1/1/95,'NPR','VB',52,'secret');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from programmer;
++-------+--------+----------+-----------+------------+----------+--------+-----------+
+| empno | projid | lastname | firstname | hiredate   | language | taskno | privilege |
++-------+--------+----------+-----------+------------+----------+--------+-----------+
+| 201   | NPR    | gupta    | saurav    | 0000-00-00 | VB       |     52 | secret    |
++-------+--------+----------+-----------+------------+----------+--------+-----------+
+1 row in set (0.00 sec)
+
+mysql> update programmer set projid='NIT', language = 'C++' where firstname='saurav';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from programmer;
++-------+--------+-----------+-----------+------------+----------+--------+--------------+
+| empno | projid | lastname  | firstname | hiredate   | language | taskno | privilege    |
++-------+--------+-----------+-----------+------------+----------+--------+--------------+
+| 134   | TIP    | chaudhury | supriyo   | 0000-00-00 | C++      |     52 | secret       |
+| 201   | NIT    | gupta     | saurav    | 0000-00-00 | C++      |     52 | secret       |
+| 345   | TIP    | john      | peter     | 0000-00-00 | JAVA     |     52 | NULL         |
+| 390   | KCW    | ghosh     | pinky     | 0000-00-00 | JAVA     |     11 | Topsecret    |
+| 563   | NIT    | anderson  | andy      | 0000-00-00 | C++      |     89 | confidential |
+| 789   | RNC    | agarwal   | praveen   | 0000-00-00 | VB       |     11 | secret       |
+| 896   | KCW    | jha       | ranjit    | 0000-00-00 | JAVA     |     10 | Topsecret    |
++-------+--------+-----------+-----------+------------+----------+--------+--------------+
+7 rows in set (0.00 sec)
+
+
+mysql> alter table programmer drop column taskno;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from programmer;
++-------+--------+----------+-----------+------------+----------+--------------+
+| empno | projid | lastname | firstname | hiredate   | language | privilege    |
++-------+--------+----------+-----------+------------+----------+--------------+
+| 201   | NIT    | gupta    | saurav    | 0000-00-00 | C++      | secret       |
+| 345   | TIP    | john     | peter     | 0000-00-00 | JAVA     | NULL         |
+| 390   | KCW    | ghosh    | pinky     | 0000-00-00 | JAVA     | Topsecret    |
+| 563   | NIT    | anderson | andy      | 0000-00-00 | C++      | confidential |
+| 789   | RNC    | agarwal  | praveen   | 0000-00-00 | VB       | secret       |
+| 896   | KCW    | jha      | ranjit    | 0000-00-00 | JAVA     | Topsecret    |
++-------+--------+----------+-----------+------------+----------+--------------+
+6 rows in set (0.00 sec)
+
+mysql> create table department;
+ERROR 4028 (HY000): A table must have at least one visible column.
+mysql> create table department(
+    -> deptno int,
+    -> dname varchar(12) not null,
+    -> loc varchar(15) not null
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> select * from department;
+Empty set (0.00 sec)
+
+mysql> desc department;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| deptno | int         | YES  |     | NULL    |       |
+| dname  | varchar(12) | NO   |     | NULL    |       |
+| loc    | varchar(15) | NO   |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+
+mysql> create table employee(
+    -> empno int primary key,
+    -> ename varchar(20),
+    -> job varchar(12) not null,
+    -> sal int not null,
+    -> hiredate date YYYY-MM-DD,
+    -> deptno int
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'YYYY-MM-DD,
+deptno int
+)' at line 6
+mysql> create table employee(
+    -> empno int primary key,
+    -> ename varchar(20),
+    -> job varchar(12) not null,
+    -> sal int not null,
+    -> hiredate date 'YYYY-MM-DD',
+    -> deptno int
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''YYYY-MM-DD',
+deptno int
+)' at line 6
+mysql> create table employee(
+    -> empno int primary key,
+    -> ename varchar(20),
+    -> job varchar(12) not null,
+    -> sal int not null,
+    -> hiredate DATE - format YYYY-MM-DD,
+    -> deptno int
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '- format YYYY-MM-DD,
+deptno int
+)' at line 6
+mysql> create table employee(
+    -> empno int primary key,
+    -> ename varchar(20),
+    -> job varchar(12) not null,
+    -> sal int not null,
+    -> hiredate date,
+    -> deptno int
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+mysql> insert into employee (empno,ename,job,sal,hiredate,deptno) values(7001,'james','clerk',3000,6/5/2005,10);
+ERROR 1062 (23000): Duplicate entry '7001' for key 'employee.PRIMARY'
+mysql> insert into employee (empno,ename,job,sal,hiredate,deptno) values(7001,'james','clerk',3000,2002-10-11,10);
+ERROR 1292 (22007): Incorrect date value: '1981' for column 'hiredate' at row 1
+mysql> insert into employee (empno,ename,job,sal,hiredate,deptno) values(7001,'james','clerk',3000,'2002-10-11',10);
+ERROR 1062 (23000): Duplicate entry '7001' for key 'employee.PRIMARY'
+mysql> insert into employee (empno,ename,job,sal,hiredate,deptno) values(7002,'james','clerk',3000,'2002-10-11',10);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from employee;
++-------+-------+-------+------+------------+--------+------+
+| empno | ename | job   | sal  | hiredate   | deptno | mgr  |
++-------+-------+-------+------+------------+--------+------+
+|  7001 | james | clerk | 3000 | 0000-00-00 |     10 | NULL |
+|  7002 | james | clerk | 3000 | 2002-10-11 |     10 | NULL |
++-------+-------+-------+------+------------+--------+------+
+2 rows in set (0.00 sec)
+
+mysql> delete from employee where empno=7001;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> delete from employee where empno=7002;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into employee (empno,ename,job,sal,hiredate,deptno) values(7001,'james','clerk',3000,'2005-05-06',10);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into employee (empno,ename,job,sal,hiredate,deptno) values(7002,'mason','president',10000,'2005-06-06',20);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into employee (empno,ename,job,sal,hiredate,deptno) values(7003,'clark','manager',5000,'2004-05-06',20);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into employee (empno,ename,job,sal,hiredate,deptno) values(7004,'john','manager',6000,'2005-08-06',10);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into employee (empno,ename,job,sal,hiredate,deptno) values(7005,'blake','clerk',3500,'2005-09-06',30);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from employee;
++-------+-------+-----------+-------+------------+--------+------+
+| empno | ename | job       | sal   | hiredate   | deptno | mgr  |
++-------+-------+-----------+-------+------------+--------+------+
+|  7001 | james | clerk     |  3000 | 2005-05-06 |     10 | NULL |
+|  7002 | mason | president | 10000 | 2005-06-06 |     20 | NULL |
+|  7003 | clark | manager   |  5000 | 2004-05-06 |     20 | NULL |
+|  7004 | john  | manager   |  6000 | 2005-08-06 |     10 | NULL |
+|  7005 | blake | clerk     |  3500 | 2005-09-06 |     30 | NULL |
++-------+-------+-----------+-------+------------+--------+------+
+5 rows in set (0.00 sec)
+
+mysql> create table grade(
+    -> gradeno int primary key,
+    -> hi_sal int not null,
+    -> lo_sal int not null
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> alter table grade drop column lo_sal;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc grade;
++---------+------+------+-----+---------+-------+
+| Field   | Type | Null | Key | Default | Extra |
++---------+------+------+-----+---------+-------+
+| gradeno | int  | NO   | PRI | NULL    |       |
+| hi_sal  | int  | NO   |     | NULL    |       |
++---------+------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> alter table grade add column Low_sal int not null;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc grade;
++---------+------+------+-----+---------+-------+
+| Field   | Type | Null | Key | Default | Extra |
++---------+------+------+-----+---------+-------+
+| gradeno | int  | NO   | PRI | NULL    |       |
+| hi_sal  | int  | NO   |     | NULL    |       |
+| Low_sal | int  | NO   |     | NULL    |       |
++---------+------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql>mysql> insert into grade (gradeno,hi_sal,low_sal) values(1,2000,500);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into grade (gradeno,hi_sal,low_sal) values(2,3500,2100);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into grade (gradeno,hi_sal,low_sal) values(3,6000,3600);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into grade (gradeno,hi_sal,low_sal) values(4,15000,6100);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from grade;
++---------+--------+---------+
+| gradeno | hi_sal | Low_sal |
++---------+--------+---------+
+|       1 |   2000 |     500 |
+|       2 |   3500 |    2100 |
+|       3 |   6000 |    3600 |
+|       4 |  15000 |    6100 |
++---------+--------+---------+
+4 rows in set (0.00 sec)
+
+mysql> create table employee_back as select empno,ename,job,sal,hiredate,deptno,mgr from employee;
+Query OK, 5 rows affected (0.02 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> desc employee_back;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| empno    | int         | NO   |     | NULL    |       |
+| ename    | varchar(20) | YES  |     | NULL    |       |
+| job      | varchar(12) | NO   |     | NULL    |       |
+| sal      | int         | NO   |     | NULL    |       |
+| hiredate | date        | YES  |     | NULL    |       |
+| deptno   | int         | YES  |     | NULL    |       |
+| mgr      | varchar(4)  | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql> select * from employee_back;
++-------+-------+-----------+-------+------------+--------+------+
+| empno | ename | job       | sal   | hiredate   | deptno | mgr  |
++-------+-------+-----------+-------+------------+--------+------+
+|  7001 | james | clerk     |  3000 | 2005-05-06 |     10 | NULL |
+|  7002 | mason | president | 10000 | 2005-06-06 |     20 | NULL |
+|  7003 | clark | manager   |  5000 | 2004-05-06 |     20 | NULL |
+|  7004 | john  | manager   |  6000 | 2005-08-06 |     10 | NULL |
+|  7005 | blake | clerk     |  3500 | 2005-09-06 |     30 | NULL |
++-------+-------+-----------+-------+------------+--------+------+
+5 rows in set (0.00 sec)
+
+mysql> alter table employee add column comm int;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table employee add column comm;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> alter table employee add column comm int;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> update employee set comm = 0;
+Query OK, 5 rows affected (0.00 sec)
+Rows matched: 5  Changed: 5  Warnings: 0
+
+mysql> delete column from employee where hiredate<('2005-06-06');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'column from employee where hiredate<('2005-06-06')' at line 1
+mysql> delete from employee where hiredate<('2005-06-06');
+Query OK, 2 rows affected (0.00 sec)
+
+mysql> select * from employee;
++-------+-------+-----------+-------+------------+--------+------+------+
+| empno | ename | job       | sal   | hiredate   | deptno | mgr  | comm |
++-------+-------+-----------+-------+------------+--------+------+------+
+|  7002 | mason | president | 10000 | 2005-06-06 |     20 | NULL |    0 |
+|  7004 | john  | manager   |  6000 | 2005-08-06 |     10 | NULL |    0 |
+|  7005 | blake | clerk     |  3500 | 2005-09-06 |     30 | NULL |    0 |
++-------+-------+-----------+-------+------------+--------+------+------+
+3 rows in set (0.00 sec)
+
+mysql> delete from table where sal<3000;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'table where sal<3000' at line 1
+mysql> delete from employee where sal<3000;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from employee where deptno =10;
++-------+-------+---------+------+------------+--------+------+------+
+| empno | ename | job     | sal  | hiredate   | deptno | mgr  | comm |
++-------+-------+---------+------+------------+--------+------+------+
+|  7004 | john  | manager | 6000 | 2005-08-06 |     10 | NULL |    0 |
++-------+-------+---------+------+------------+--------+------+------+
+1 row in set (0.00 sec)
+
+mysql> select * from employee where deptno =10;
++-------+-------+---------+------+------------+--------+------+------+
+| empno | ename | job     | sal  | hiredate   | deptno | mgr  | comm |
++-------+-------+---------+------+------------+--------+------+------+
+|  7004 | john  | manager | 6000 | 2005-08-06 |     10 | NULL |    0 |
++-------+-------+---------+------+------------+--------+------+------+
+1 row in set (0.00 sec)
+
+mysql> select * from employee where deptno=10 and job='manager';
++-------+-------+---------+------+------------+--------+------+------+
+| empno | ename | job     | sal  | hiredate   | deptno | mgr  | comm |
++-------+-------+---------+------+------------+--------+------+------+
+|  7004 | john  | manager | 6000 | 2005-08-06 |     10 | NULL |    0 |
++-------+-------+---------+------+------------+--------+------+------+
+1 row in set (0.00 sec)
+mysql> select * from employee where hiredate>('2005-07-10');
++-------+-------+---------+------+------------+--------+------+------+
+| empno | ename | job     | sal  | hiredate   | deptno | mgr  | comm |
++-------+-------+---------+------+------------+--------+------+------+
+|  7004 | john  | manager | 6000 | 2005-08-06 |     10 | NULL |    0 |
+|  7005 | blake | clerk   | 3500 | 2005-09-06 |     30 | NULL |    0 |
++-------+-------+---------+------+------------+--------+------+------+
+2 rows in set (0.00 sec)
+
+mysql> select * from employee where job='manager' or job= 'president';
++-------+-------+-----------+-------+------------+--------+------+------+
+| empno | ename | job       | sal   | hiredate   | deptno | mgr  | comm |
++-------+-------+-----------+-------+------------+--------+------+------+
+|  7002 | mason | president | 10000 | 2005-06-06 |     20 | NULL |    0 |
+|  7004 | john  | manager   |  6000 | 2005-08-06 |     10 | NULL |    0 |
++-------+-------+-----------+-------+------------+--------+------+------+
