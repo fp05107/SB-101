@@ -1,0 +1,47 @@
+3 sum 
+Description
+
+Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0.
+
+Note: that the solution set must not contain duplicate triplets..
+
+
+Input
+Input Format
+The input consists of multiple testcases.
+
+The first line of input contains an integer t - the number of testcases.
+
+The next 2*t lines contain the description of the t testcases.
+
+The first line of each testcase contains an integer n, the size of the array nums.
+
+The second line of each testcase contains n space separated integers nums[0],nums[1]....nums[n-1] denoting the n elements of the nums array.
+
+Constraints
+1 <=t<= 100
+
+1 <=n<= 1000
+
+-10^4 <=nums[i]<= 10^4
+
+
+Output
+Output Format
+For each testcase output first the number of such triplets, followed by each triplet on a new line,where the triplets are in sorted order, i.e. both the individual triplet and the the overall output should be sorted.
+
+
+Sample Input 1 
+
+1
+6
+-1 0 1 2 -1 -4
+Sample Output 1
+
+2
+-1 -1 2
+-1 0 1
+Hint
+
+First testcase
+There are only two unique tripplets possible such that their sum is 0.
