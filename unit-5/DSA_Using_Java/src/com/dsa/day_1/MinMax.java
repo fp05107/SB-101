@@ -1,7 +1,7 @@
-package com.dsa.day_1.q1;
+package com.dsa.day_1;
 
 import java.util.*;
-class Main{
+class MinMax{
     public static void main(String[] args){
         Scanner sc = new Scanner(System.in);
         
