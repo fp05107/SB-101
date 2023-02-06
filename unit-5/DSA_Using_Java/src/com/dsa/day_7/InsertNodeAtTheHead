@@ -1,5 +1,6 @@
 Insert a node at the Head 
-=========================
+===========================
+
 Description
 
 Given a pointer to the head of a linked list, insert a new node before the head. Return a reference to the new head of the list. The head pointer given may be null meaning that the initial list is empty.
