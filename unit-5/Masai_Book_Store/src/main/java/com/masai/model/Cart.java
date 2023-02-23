@@ -1,11 +1,14 @@
 package com.masai.model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotBlank;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,6 +28,7 @@ public class Cart {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer cartId;
 
+	@NotBlank(message = "Total can not be blank")
 	private Integer total;
 
 	@ManyToOne
@@ -33,7 +37,7 @@ public class Cart {
 
 	@ManyToOne
 	@JoinColumn(name = "bookId")
-	private Book book;
+	private List<Book> books;
 
 }
 

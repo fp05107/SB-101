@@ -10,6 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -29,12 +32,17 @@ public class Book {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer bookId;
 
+	@NotBlank(message = "name is required")
+	@Pattern(regexp = "^[A-Za-z]+$", message = "name must not contain numbers or special characters")
 	private String name;
 
+	@NotNull
 	private Integer pages;
 
+	@NotNull
 	private String publisher;
 
+	@NotNull
 	private Integer price;
 
 	@ManyToOne

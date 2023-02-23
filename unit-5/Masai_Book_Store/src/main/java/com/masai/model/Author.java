@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,10 +29,15 @@ public class Author {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer authorId;
 	
+	@NotBlank(message = "name is required")
+	@Pattern(regexp = "^[A-Za-z]+$", message = "name must not contain numbers or special characters")
 	private String name;
 	
+	@NotBlank(message = "Mobile number is required")
+	@Pattern(regexp = "\\d{10}", message = "Mobile number must have 10 digits")
 	private String mobileNo;
 	
+	@NotBlank(message = "Address is required")
 	private String address;
 	
 	@OneToMany(mappedBy = "author")
